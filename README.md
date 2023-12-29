@@ -35,8 +35,7 @@ mybatis-generator-gui是基于 [mybatis generator](http://www.mybatis.org/genera
 ### 启动本软件
 
 * 方法一：关注微信公众号“搬砖头也要有态度”，回复“GUI”获取下载链接
-    
-  ![image](https://user-images.githubusercontent.com/3505708/61360019-2893dc00-a8b0-11e9-8dc9-a020e997ab87.png)
+
 
 * 方法二: 自助构建
 
