@@ -462,7 +462,7 @@ public class MainUIController extends BaseFXController {
         overrideXML.setSelected(generatorConfig.isOverrideXML());
         needToStringHashcodeEquals.setSelected(generatorConfig.isNeedToStringHashcodeEquals());
         useLombokPlugin.setSelected(generatorConfig.isUseLombokPlugin());
-        useTableNameAliasCheckbox.setSelected(generatorConfig.getUseTableNameAlias());
+        useTableNameAliasCheckbox.setSelected(generatorConfig.isUseTableNameAlias());
         forUpdateCheckBox.setSelected(generatorConfig.isNeedForUpdate());
         annotationDAOCheckBox.setSelected(generatorConfig.isAnnotationDAO());
         annotationCheckBox.setSelected(generatorConfig.isAnnotation());

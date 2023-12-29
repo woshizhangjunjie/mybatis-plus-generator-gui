@@ -1,5 +1,9 @@
 package com.zzg.mybatis.generator.bridge;
 
+import com.baomidou.mybatisplus.generator.AutoGenerator;
+import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.jcraft.jsch.Session;
 import com.zzg.mybatis.generator.controller.PictureProcessStateController;
 import com.zzg.mybatis.generator.model.DatabaseConfig;
@@ -58,9 +62,9 @@ public class MybatisGeneratorBridge {
         Configuration configuration = new Configuration();
         Context context = new Context(ModelType.CONDITIONAL);
         configuration.addContext(context);
-		
+
         context.addProperty("javaFileEncoding", "UTF-8");
-        
+
 		String dbType = selectedDatabaseConfig.getDbType();
 		String connectorLibPath = ConfigHelper.findConnectorLibPath(dbType);
 	    _LOG.info("connectorLibPath: {}", connectorLibPath);
@@ -254,20 +258,65 @@ public class MybatisGeneratorBridge {
 
         context.setTargetRuntime("MyBatis3");
 
-        List<String> warnings = new ArrayList<>();
-        Set<String> fullyqualifiedTables = new HashSet<>();
-        Set<String> contexts = new HashSet<>();
-        ShellCallback shellCallback = new DefaultShellCallback(true); // override=true
-        MyBatisGenerator myBatisGenerator = new MyBatisGenerator(configuration, shellCallback, warnings);
-        // if overrideXML selected, delete oldXML ang generate new one
-		if (generatorConfig.isOverrideXML()) {
-			String mappingXMLFilePath = getMappingXMLFilePath(generatorConfig);
-			File mappingXMLFile = new File(mappingXMLFilePath);
-			if (mappingXMLFile.exists()) {
-				mappingXMLFile.delete();
-			}
-		}
-        myBatisGenerator.generate(progressCallback, contexts, fullyqualifiedTables);
+
+
+        AutoGenerator generator = new AutoGenerator();
+        //模块名
+        String moduleName = "web";
+
+        // 全局配置
+        GlobalConfig globalConfig = new GlobalConfig();
+        globalConfig.setOutputDir(generatorConfig.getProjectFolder()  + "/src/main/java");
+        //globalConfig.setAuthor(BASE_PACKAGE_URL + "." + moduleName);
+        globalConfig.setOpen(false);
+        globalConfig.setFileOverride(false);
+        globalConfig.setSwagger2(true); //实体属性 Swagger2 注解
+        generator.setGlobalConfig(globalConfig);
+
+        // 数据源配置
+        DataSourceConfig dataSourceConfig = new DataSourceConfig();
+        dataSourceConfig.setUrl(DbUtil.getConnectionUrlWithSchema(selectedDatabaseConfig));
+        dataSourceConfig.setDriverName(DbType.valueOf(dbType).getDriverClass());
+        dataSourceConfig.setUsername(selectedDatabaseConfig.getUsername());
+        dataSourceConfig.setPassword(selectedDatabaseConfig.getPassword());
+        generator.setDataSource(dataSourceConfig);
+
+
+
+        // 包配置
+        PackageConfig packageConfig = new PackageConfig();
+        packageConfig.setModuleName(moduleName);
+        packageConfig.setParent(generatorConfig.getParentPackage());
+        generator.setPackageInfo(packageConfig);
+
+//        // 配置自定义代码模板
+//        TemplateConfig templateConfig = new TemplateConfig();
+//        templateConfig.setXml(XML_MAPPER_TEMPLATE_PATH);
+//        templateConfig.setMapper(MAPPER_TEMPLATE_PATH);
+//        templateConfig.setEntity(ENTITY_TEMPLATE_PATH);
+//        templateConfig.setService(SERVICE_TEMPLATE_PATH);
+//        templateConfig.setServiceImpl(SERVICE_IMPL_TEMPLATE_PATH);
+//        templateConfig.setController(CONTROLLER_TEMPLATE_PATH);
+//        generator.setTemplate(templateConfig);
+//
+//        // 策略配置
+//        StrategyConfig strategy = new StrategyConfig();
+//        strategy.setNaming(NamingStrategy.underline_to_camel);
+//        strategy.setColumnNaming(NamingStrategy.underline_to_camel);
+//        strategy.setEntityLombokModel(true);
+//        strategy.setRestControllerStyle(true);
+//        //strategy.setSuperControllerClass("com.mixchains.ytboot.common.controller.BaseController");
+//        strategy.setSuperEntityClass("com.mixchains.ytboot.common.domain.BaseEntity");
+//        strategy.setInclude(scanner("表名,多个英文逗号分割").split(","));
+//        strategy.setSuperEntityColumns("id", "uuid", "deleted", "create_time", "create_user_id", "create_username", "modify_time", "modify_user_id", "modify_username");
+//        strategy.setControllerMappingHyphenStyle(true);
+//        strategy.setTablePrefix(packageConfig.getModuleName() + "_");
+//        generator.setStrategy(strategy);
+//        generator.setTemplateEngine(new FreemarkerTemplateEngine());
+//
+//        //自定义dto模板
+//        generator.setCfg(customerConfig(projectPath + "/src/main/java/" + BASE_PACKAGE_PATH + "/" + moduleName + "/dto"));
+        generator.execute();
     }
 
     private String getMappingXMLFilePath(GeneratorConfig generatorConfig) {
