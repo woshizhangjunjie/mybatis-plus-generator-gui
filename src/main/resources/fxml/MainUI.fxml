@@ -64,9 +64,9 @@
                                   <columnConstraints>
                                       <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="157.0" minWidth="132.0" prefWidth="138.0" />
                                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="222.0" />
-                                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="688.0" minWidth="69.0" prefWidth="76.0" />
-                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="108.0" />
-                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="129.0" />
+                                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="688.0" minWidth="69.0" prefWidth="110.0" />
+                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="388.0" minWidth="10.0" prefWidth="110.0" />
+                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="130.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="95.0" />
                                   </columnConstraints>
                                   <rowConstraints>
@@ -144,7 +144,7 @@
                                           </children>
                                       </HBox>
                                       <Label text="实体类名包名" GridPane.rowIndex="5" />
-                                        <TextField fx:id="modelTargetPackage" prefHeight="27.0" prefWidth="152.0" promptText="com.example.model" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                        <TextField fx:id="modelTargetPackage" prefHeight="27.0" prefWidth="152.0" promptText="model" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                             <HBox.margin>
                                                 <Insets right="5.0" />
                                             </HBox.margin>
@@ -153,7 +153,7 @@
                                  </GridPane.margin>
                                         </TextField>
                                       <Label text="Mapper接口包名" GridPane.rowIndex="6" />
-                                        <TextField fx:id="daoTargetPackage" prefHeight="27.0" prefWidth="248.0" promptText="com.example.mapper" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                        <TextField fx:id="daoTargetPackage" prefHeight="27.0" prefWidth="248.0" promptText="mapper" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                             <HBox.margin>
                                                 <Insets right="5.0" />
                                             </HBox.margin>
@@ -273,6 +273,11 @@
                                  <GridPane.margin>
                                     <Insets left="5.0" />
                                  </GridPane.margin></TextField>
+                              <Label prefHeight="15.0" prefWidth="185.0" text="实体类base包路径" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin></Label>
+                              <TextField prefHeight="23.0" prefWidth="140.0" promptText="com.example.baomidou.BaseEntity" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="5" />
                                   </children>
                               </GridPane>
                      </children>
