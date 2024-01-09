@@ -30,7 +30,7 @@ public class MainUI extends Application {
 		Parent root = fxmlLoader.load();
 		primaryStage.setResizable(true);
 		primaryStage.setScene(new Scene(root));
-		primaryStage.setTitle("Mybatis Generator GUI");
+		primaryStage.setTitle("mybatis-plus-generator GUI");
 		Image imageIcon = new Image("icons/mybatis-logo.png");
 		primaryStage.getIcons().add(imageIcon);
 		primaryStage.show();

@@ -53,8 +53,8 @@ public class MainUIController extends BaseFXController {
     private Label configsLabel;
     @FXML
     private TextField modelTargetPackage;
-    @FXML
-    private TextField mapperTargetPackage;
+//    @FXML
+//    private TextField mapperTargetPackage;
     @FXML
     private TextField daoTargetPackage;
     @FXML
@@ -62,15 +62,20 @@ public class MainUIController extends BaseFXController {
     @FXML
     private TextField domainObjectNameField;
     @FXML
-    private TextField generateKeysField;	//主键ID
+    private TextField generateKeysField;
     @FXML
-    private TextField modelTargetProject;
+    private TextField modelName;
     @FXML
-    private TextField mappingTargetProject;
+    private TextField basePackage;
     @FXML
-    private TextField daoTargetProject;
-    @FXML
-    private TextField mapperName;
+    private TextField domainBasePackage;
+
+//    @FXML
+//    private TextField modelTargetProject;
+//    @FXML
+//    private TextField mappingTargetProject;
+//    @FXML
+//    private TextField daoTargetProject;
     @FXML
     private TextField projectFolderField;
     @FXML
@@ -204,7 +209,6 @@ public class MainUIController extends BaseFXController {
                         this.tableName = tableName;
                         tableNameField.setText(tableName);
                         domainObjectNameField.setText(MyStringUtils.dbStringToCamelStyle(tableName));
-                        mapperName.setText(domainObjectNameField.getText().concat("DAO"));
                     }
                 }
             });
@@ -380,9 +384,9 @@ public class MainUIController extends BaseFXController {
 		if (StringUtils.isEmpty(domainObjectNameField.getText()))  {
 			return "类名不能为空";
 		}
-		if (StringUtils.isAnyEmpty(modelTargetPackage.getText(), mapperTargetPackage.getText(), daoTargetPackage.getText())) {
-			return "包名不能为空";
-		}
+//		if (StringUtils.isAnyEmpty(modelTargetPackage.getText(), mapperTargetPackage.getText(), daoTargetPackage.getText())) {
+//			return "包名不能为空";
+//		}
 
 		return null;
 	}
@@ -417,12 +421,15 @@ public class MainUIController extends BaseFXController {
         generatorConfig.setProjectFolder(projectFolderField.getText());
         generatorConfig.setModelPackage(modelTargetPackage.getText());
         generatorConfig.setGenerateKeys(generateKeysField.getText());
-        generatorConfig.setModelPackageTargetFolder(modelTargetProject.getText());
+        generatorConfig.setBasePackage(basePackage.getText());
+        generatorConfig.setDomainBasePackage(domainBasePackage.getText());
+        generatorConfig.setModelName(modelName.getText());
+        //generatorConfig.setModelPackageTargetFolder(modelTargetProject.getText());
         generatorConfig.setDaoPackage(daoTargetPackage.getText());
-        generatorConfig.setDaoTargetFolder(daoTargetProject.getText());
-        generatorConfig.setMapperName(mapperName.getText());
-        generatorConfig.setMappingXMLPackage(mapperTargetPackage.getText());
-        generatorConfig.setMappingXMLTargetFolder(mappingTargetProject.getText());
+        //generatorConfig.setDaoTargetFolder(daoTargetProject.getText());
+        //generatorConfig.setMapperName(mapperName.getText());
+        //generatorConfig.setMappingXMLPackage(mapperTargetPackage.getText());
+        //generatorConfig.setMappingXMLTargetFolder(mappingTargetProject.getText());
         generatorConfig.setTableName(tableNameField.getText());
         generatorConfig.setDomainObjectName(domainObjectNameField.getText());
         generatorConfig.setOffsetLimit(offsetLimitCheckBox.isSelected());
@@ -446,15 +453,18 @@ public class MainUIController extends BaseFXController {
     public void setGeneratorConfigIntoUI(GeneratorConfig generatorConfig) {
         projectFolderField.setText(generatorConfig.getProjectFolder());
         modelTargetPackage.setText(generatorConfig.getModelPackage());
+        modelName.setText(generatorConfig.getModelName());
         generateKeysField.setText(generatorConfig.getGenerateKeys());
-        modelTargetProject.setText(generatorConfig.getModelPackageTargetFolder());
+        basePackage.setText(generatorConfig.getBasePackage());
+        domainBasePackage.setText(generatorConfig.getDomainBasePackage());
+        //modelTargetProject.setText(generatorConfig.getModelPackageTargetFolder());
         daoTargetPackage.setText(generatorConfig.getDaoPackage());
-		daoTargetProject.setText(generatorConfig.getDaoTargetFolder());
-		mapperTargetPackage.setText(generatorConfig.getMappingXMLPackage());
-        mappingTargetProject.setText(generatorConfig.getMappingXMLTargetFolder());
+		//daoTargetProject.setText(generatorConfig.getDaoTargetFolder());
+		//mapperTargetPackage.setText(generatorConfig.getMappingXMLPackage());
+        //mappingTargetProject.setText(generatorConfig.getMappingXMLTargetFolder());
         if (StringUtils.isBlank(tableNameField.getText())) {
             tableNameField.setText(generatorConfig.getTableName());
-            mapperName.setText(generatorConfig.getMapperName());
+            //mapperName.setText(generatorConfig.getMapperName());
             domainObjectNameField.setText(generatorConfig.getDomainObjectName());
         }
         offsetLimitCheckBox.setSelected(generatorConfig.isOffsetLimit());
@@ -512,9 +522,9 @@ public class MainUIController extends BaseFXController {
     private boolean checkDirs(GeneratorConfig config) {
 		List<String> dirs = new ArrayList<>();
 		dirs.add(config.getProjectFolder());
-		dirs.add(config.getProjectFolder().concat("/").concat(config.getModelPackageTargetFolder()));
-		dirs.add(config.getProjectFolder().concat("/").concat(config.getDaoTargetFolder()));
-		dirs.add(config.getProjectFolder().concat("/").concat(config.getMappingXMLTargetFolder()));
+//		dirs.add(config.getProjectFolder().concat("/").concat(config.getModelPackageTargetFolder()));
+//		dirs.add(config.getProjectFolder().concat("/").concat(config.getDaoTargetFolder()));
+//		dirs.add(config.getProjectFolder().concat("/").concat(config.getMappingXMLTargetFolder()));
 		boolean haveNotExistFolder = false;
 		for (String dir : dirs) {
 			File file = new File(dir);
