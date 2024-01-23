@@ -146,7 +146,7 @@ public class MybatisGeneratorBridge {
     //基础分页
     private static final String BASE_PAGE_TEMPLATE_PATH = "templates/basePage.java.ftl";
     //基础响应类
-    private static final String BASE_RETURN_VO_TEMPLATE_PATH = "templates/ReturnVo.java.ftl";
+    private static final String BASE_RETURN_VO_TEMPLATE_PATH = "templates/returnVo.java.ftl";
     //基础实体类
     private static final String BASE_ENTITY_TEMPLATE_PATH = "templates/baseEntity.java.ftl";
     //基础序列化类
