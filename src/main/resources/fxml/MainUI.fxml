@@ -153,7 +153,7 @@
                                     <!--<Insets left="5.0" right="5.0" />-->
                                  <!--</GridPane.margin>-->
                                         <!--</TextField>-->
-                              <VBox prefHeight="53.0" prefWidth="536.0" spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="9">
+                              <VBox prefHeight="53.0" prefWidth="536.0" spacing="10.0" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="9">
                                  <children>
                                     <HBox alignment="CENTER_LEFT">
                                        <children>
@@ -246,11 +246,11 @@
                                  <GridPane.margin>
                                     <Insets left="5.0" />
                                  </GridPane.margin></TextField>
-                              <Label prefHeight="15.0" prefWidth="185.0" text="实体类base包路径" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                              <Label prefHeight="15.0" prefWidth="185.0" text="实体类base包路径" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="4">
                                  <GridPane.margin>
                                     <Insets />
                                  </GridPane.margin></Label>
-                              <TextField fx:id="domainBasePackage" prefHeight="23.0" prefWidth="140.0" promptText="com.example.baomidou.BaseEntity" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+                              <TextField fx:id="domainBasePackage" prefHeight="23.0" prefWidth="140.0" promptText="com.example.baomidou.BaseEntity" style="visibility: false;" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="4" />
                                       <Label text="实体类的公共字段(,分隔)" GridPane.rowIndex="5" />
                                       <TextField fx:id="generateKeysField" prefHeight="25.0" prefWidth="216.0" promptText="id,uuid,create_time,update_time,deleted" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="5">
                                           <GridPane.margin>

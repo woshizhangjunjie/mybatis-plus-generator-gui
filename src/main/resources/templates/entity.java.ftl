@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 </#if>
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.mixchains.ytboot.common.config.JsonSerializerConfig;
+import ${package.Entity}.base.JsonSerializerConfig;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 /**

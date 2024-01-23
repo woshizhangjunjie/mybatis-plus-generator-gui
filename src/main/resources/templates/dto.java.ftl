@@ -1,6 +1,6 @@
-package ${author}.dto;<#--无法自定义带参 这里只能用作者暂时替代下包名-->
+package ${package.Entity}.dto;
 
-import com.mixchains.ytboot.common.domain.BasePage;
+import ${package.Entity}.base.BasePage;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

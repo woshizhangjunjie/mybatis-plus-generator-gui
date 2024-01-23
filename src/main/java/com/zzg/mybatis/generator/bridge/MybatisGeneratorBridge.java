@@ -108,7 +108,10 @@ public class MybatisGeneratorBridge {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
-        strategy.setSuperEntityClass(generatorConfig.getDomainBasePackage());
+        //strategy.setSuperEntityClass(generatorConfig.getDomainBasePackage());
+        //实体类基础包路径 当修改以下自定义模板时，如修改了实体类基础包的路径，此处也需要修改 todo
+        //com.yuntai.web.domain.base.BaseEntity;
+        strategy.setSuperEntityClass(generatorConfig.getBasePackage() + "." + moduleName + "." + generatorConfig.getModelPackage() + ".base.BaseEntity");
         strategy.setInclude(generatorConfig.getTableName());
         String generateKeys = generatorConfig.getGenerateKeys();
         String[] split = generateKeys.split(",");
@@ -117,9 +120,14 @@ public class MybatisGeneratorBridge {
         strategy.setTablePrefix(packageConfig.getModuleName() + "_");
         generator.setStrategy(strategy);
         generator.setTemplateEngine(new FreemarkerTemplateEngine());
-
+        //项目模块基础路径
+        String basePackageUrl = generatorConfig.getBasePackage().replace(".", "/") + "/" + moduleName + "/" + generatorConfig.getModelPackage();
+        //自定义模板
+        generator.setCfg(templateConfig(generatorConfig.getProjectFolder() + "/src/main/java/"
+                + basePackageUrl));
         generator.execute();
     }
+
 
     // xml 文件模板
     private static final String XML_MAPPER_TEMPLATE_PATH = "templates/mapper.xml";
@@ -135,6 +143,84 @@ public class MybatisGeneratorBridge {
     private static final String CONTROLLER_TEMPLATE_PATH = "templates/controller.java";
     // dto 文件模板
     private static final String DTO_TEMPLATE_PATH = "templates/dto.java.ftl";
+    //基础分页
+    private static final String BASE_PAGE_TEMPLATE_PATH = "templates/basePage.java.ftl";
+    //基础响应类
+    private static final String BASE_RETURN_VO_TEMPLATE_PATH = "templates/ReturnVo.java.ftl";
+    //基础实体类
+    private static final String BASE_ENTITY_TEMPLATE_PATH = "templates/baseEntity.java.ftl";
+    //基础序列化类
+    private static final String BASE_JSON_SERIALIZER_CONFIG_TEMPLATE_PATH = "templates/jsonSerializerConfig.java.ftl";
+    //基础断言类
+    private static final String BASE_ASSERT_TEMPLATE_PATH = "templates/ytBootAssert.java.ftl";
+    //基础异常类
+    private static final String BASE_EXCEPTION_TEMPLATE_PATH = "templates/ytBootException.java.ftl";
+
+    /**
+     * 自定义生成模板类
+     */
+    private static InjectionConfig templateConfig(String outPath) {
+
+        InjectionConfig config = new InjectionConfig() {
+            @Override
+            public void initMap() {
+
+            }
+        };
+
+        List<FileOutConfig> files = new ArrayList<FileOutConfig>();
+        // 生成分页请求类
+        files.add(new FileOutConfig(DTO_TEMPLATE_PATH) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                return String.format((outPath + "/dto" + File.separator + "%s" + ".java"), tableInfo.getEntityName() + "Dto");
+            }
+        });
+        // 基础分页类
+        files.add(new FileOutConfig(BASE_PAGE_TEMPLATE_PATH) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                return String.format((outPath + "/base" + File.separator + "%s" + ".java"), "BasePage");
+            }
+        });
+        // 基础响应类
+        files.add(new FileOutConfig(BASE_RETURN_VO_TEMPLATE_PATH) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                return String.format((outPath + "/base" + File.separator + "%s" + ".java"), "ReturnVo");
+            }
+        });
+        // 基础实体类
+        files.add(new FileOutConfig(BASE_ENTITY_TEMPLATE_PATH) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                return String.format((outPath + "/base" + File.separator + "%s" + ".java"), "BaseEntity");
+            }
+        });
+        // 基础序列化类
+        files.add(new FileOutConfig(BASE_JSON_SERIALIZER_CONFIG_TEMPLATE_PATH) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                return String.format((outPath + "/base" + File.separator + "%s" + ".java"), "JsonSerializerConfig");
+            }
+        });
+        // 基础断言类
+        files.add(new FileOutConfig(BASE_ASSERT_TEMPLATE_PATH) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                return String.format((outPath + "/base" + File.separator + "%s" + ".java"), "YTBootAssert");
+            }
+        });
+        // 基础异常类
+        files.add(new FileOutConfig(BASE_EXCEPTION_TEMPLATE_PATH) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                return String.format((outPath + "/base" + File.separator + "%s" + ".java"), "YtBootException");
+            }
+        });
+        config.setFileOutConfigList(files);
+        return config;
+    }
 
     private String getMappingXMLFilePath(GeneratorConfig generatorConfig) {
         StringBuilder sb = new StringBuilder();
